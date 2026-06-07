@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Роме — 20 лет</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0d0c0b;
+      --surface: #161411;
+      --card: #1c1916;
+      --border: #2e2a24;
+      --gold: #c9a96e;
+      --gold-light: #e8c98a;
+      --gold-dim: #8a6f45;
+      --text: #e8e0d4;
+      --text-muted: #8a7f72;
+      --text-dim: #5a5248;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Geologica', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(9rem, 22vw, 18rem);
+      font-weight: 300;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--gold-dim);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 1.2s cubic-bezier(.16,1,.3,1) 0.2s forwards;
+      user-select: none;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 400;
+      color: var(--gold-light);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: -1.5rem;
+      opacity: 0;
+      animation: fadeUp 1.2s cubic-bezier(.16,1,.3,1) 0.5s forwards;
+    }
+
+    .hero-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-top: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1.2s cubic-bezier(.16,1,.3,1) 0.8s forwards;
+    }
+
+    .hero-line {
+      width: 60px;
+      height: 1px;
+      background: var(--gold-dim);
+      margin: 2rem auto 0;
+      opacity: 0;
+      animation: fadeUp 1.2s cubic-bezier(.16,1,.3,1) 1s forwards;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.5s forwards;
+      color: var(--text-dim);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── TEXT ─── */
+    .text-block {
+      font-size: 1.05rem;
+      color: var(--text);
+      line-height: 1.9;
+    }
+
+    .text-block p {
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .text-block p.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .text-block p:last-child { margin-bottom: 0; }
+
+    /* ─── SECTION LABEL ─── */
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── IMAGES ─── */
+    .img-grid-1 { margin: 2.5rem 0; }
+
+    .img-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2.5rem 0;
+    }
+
+    .img-slot {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .img-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ─── VIDEO ─── */
+    .video-slot {
+      width: 100%;
+      aspect-ratio: 16/9;
+      margin: 2.5rem 0;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .video-slot video,
+    .video-slot iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ─── TIMELINE ─── */
+    .timeline-year {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+    }
+
+    .timeline-year::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ─── FINAL ─── */
+    .final-section {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem;
+      position: relative;
+    }
+
+    .final-section::before {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .final-greeting {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+      color: var(--gold-light);
+      line-height: 1.4;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .final-greeting.visible { opacity: 1; transform: translateY(0); }
+
+    .final-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+
+    .final-text.visible { opacity: 1; transform: translateY(0); }
+
+    .signature {
+      margin-top: 3rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--text-dim);
+      opacity: 0;
+      transition: opacity 0.8s ease 0.4s;
+    }
+
+    .signature.visible { opacity: 1; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      .img-grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="hero-number">20</div>
+    <div class="hero-title">С днём рождения, Рома</div>
+    <div class="hero-sub">13 лет вместе — от школы до сего дня</div>
+    <div class="hero-line"></div>
+    <div class="scroll-hint">прокрути вниз</div>
+  </section>
+
+  <main>
+
+    <!-- 1 -->
+    <section class="section">
+      <div class="container">
+        <div class="section-label">13 лет</div>
+        <div class="text-block">
+          <p>20 лет, казалось бы, как это много, целых 20 лет. Знаю я тебя, хоть косвенно, хоть напрямую, все 13 лет — удивительно. Время идёт, всё меняется, но ты есть, ты всегда есть. От школы, лицея, вуза — ты всё равно живёшь. Тебя многое ломало, тебе было плохо, тебе было нехорошо, но ты в итоге тут, живой.</p>
+          <p>Нас объединяет куча совместных событий, куча часов на площадке, куча голосовых. Понятно, что я не самый хороший друг, но я рад, что хотя бы в части твоей жизни я был белым пятном, которое приносило радость и стабильность.</p>
+          <p>Радостно, что за этот промежуток времени ты словно нащупал то, чем бы ты хотел заниматься — режиссура и т.п. А ведь это проявлялось ещё давно, в школе — те же школьные клипы, выступления и т.п.</p>
+        </div>
+
+        <div class="img-grid-1">
+          <div class="img-slot">
+            <img src="photos/one.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Видео -->
+    <section class="section">
+      <div class="container">
+        <div class="section-label">Астроскул</div>
+        <div class="video-slot">
+          <video src="photos/two.mp4" controls></video>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Школа -->
+    <section class="section">
+      <div class="container">
+        <div class="section-label">Школа</div>
+        <div class="text-block">
+          <p>Ты всегда был тем самым человеком, кто тащил всё на себе, без тебя ничего бы не было. До сих пор я не могу представить старосты лучше, чем ты. В тебе так удачно сошлись качества, необходимые для роли руководителя: ты мог найти язык с любым человеком, донести свои мысли, разрулить любую ситуацию — это удивительно! Таких людей мало — тех, кто может быть руководителем и при этом таким живым и правильным!</p>
+        </div>
+
+        <div class="img-grid-1">
+          <div class="img-slot">
+            <img src="photos/tow2.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 2022 -->
+    <section class="section">
+      <div class="container">
+        <div class="timeline-year">2022</div>
+        <div class="section-label">Первый большой фильм</div>
+        <div class="text-block">
+          <p>Удивительно, но 22-й год, год, когда снимали первый по-настоящему большой фильм, был аж 4 года назад. Тебе было тогда так мало, но уже тогда ты делал столь большие проекты. Столь сложные с точки зрения тимбилдинга, с точки зрения всего — ты брал на себя гору ответственности и всё равно вывозил. Это довольно редкий дар!</p>
+        </div>
+
+        <div class="img-grid-1">
+          <div class="img-slot">
+            <img src="photos/three.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Лицей -->
+    <section class="section">
+      <div class="container">
+        <div class="section-label">Лицей & Пресс-центр</div>
+        <div class="text-block">
+          <p>Затем был лицей, и так называемый серый кардинал пресс-центра снова был на коне. Казалось бы, брооооо, что ты тут забыл — но ты был основной движущей силой. Вот куда пришёл пресс-центр сейчас? Никуда, скатились лошки, даже учкаст не снимают((((</p>
+          <p>Было много безумия — те самые ночные похождения по СПб, та самая ночь с цветами.</p>
+        </div>
+
+        <div class="img-grid-1">
+          <div class="img-slot">
+            <img src="photos/four.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Лисий нос -->
+    <section class="section">
+      <div class="container">
+        <div class="section-label">Лето & Приключения</div>
+        <div class="text-block">
+          <p>Затем было поступление, лето, поездка до Лисьего Носа. Так радостно, что есть человек, который может поддержать шизу, которую вкидываешь в рандомный момент — это очень сильно радует!!!!! Да и сам ты способен на безумие. Камон, какой дядя в заброшке с пистолетом. Какая погоня на Достоевской — это безумие, это сумасшедшая тяга к достижению цели несмотря ни на что!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. ЛЭТИ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-label">ЛЭТИ</div>
+        <div class="text-block">
+          <p>Шёл год, сраное поступление и ЕГЭ. И даже тут ты старался балансировать на грани пропасти. Но в итоге ты тут, в ЛЭТИ — даааа, гадем Стейси. Могло быть лучше, но что есть то есть, хотя бы не Политех, а то дядюшка Малов сделал бы дырку. (Тимофеев — минус вайб, всякий раз вижу его в ЛЭТИ — пугаюсь, минус вайб челик)</p>
+        </div>
+
+        <div class="img-grid-2">
+          <div class="img-slot">
+            <img src="photos/five.jpg" alt="">
+          </div>
+          <div class="img-slot">
+            <img src="photos/last.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Финал -->
+    <section class="final-section">
+      <div class="container" style="width:100%">
+        <p class="final-greeting">
+          Ты не пропадёшь.<br>Ты никогда не утонешь.
+        </p>
+        <p class="final-text">
+          Я не знаю, к чему приведёт тебя жизнь, я не знаю, как всё повернётся, как сложится твоя жизнь, но я знаю одно — ты всегда найдёшь способ выйти из любой ситуации. Оставайся таким, какой ты есть, развивайся туда, где тебе нравится, не забрасывай свои хобби, не трать время на пустых людей, не распыляй свой талант — у тебя всё получится. Нужно просто время.<br><br>
+          Надеюсь, что через 10 лет я пришлю тебе новое сообщение. Надеюсь, что через 10 лет мы также встретимся. За тобой, как бы тебе ни казалось, стоит куча людей, кто готов помочь тебе, кто тебя не бросит даже в трудную минуту.
+        </p>
+        <p class="signature">С днём рождения, мой дорогой бородатый друг )))))</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.text-block p, .final-greeting, .final-text, .signature')
+      .forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
